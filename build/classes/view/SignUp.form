@@ -67,15 +67,15 @@
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="lFacultad" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel7" alignment="1" max="32767" attributes="0"/>
-                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnCrear" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
                               <Component id="jPassword" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-                              <Component id="lUsuario" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                              <Component id="jUsuario" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="140" max="32767" attributes="0"/>
+                  <EmptySpace pref="165" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -104,7 +104,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lApellidos" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
-                      <Component id="lUsuario" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
+                      <Component id="jUsuario" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -117,7 +117,7 @@
                       <Component id="jPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="72" max="32767" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCrear" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -160,12 +160,12 @@
             <Property name="text" type="java.lang.String" value="Nombre:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="lUsuario">
+        <Component class="javax.swing.JTextField" name="jUsuario">
           <Properties>
             <Property name="text" type="java.lang.String" value="usuario"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lUsuarioActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jUsuarioActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
@@ -208,7 +208,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="lDocumento">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Hernandez"/>
+            <Property name="text" type="java.lang.String" value="000000"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lDocumentoActionPerformed"/>
@@ -228,18 +228,19 @@
         <Component class="javax.swing.JComboBox" name="lFacultad">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="11">
+              <StringArray count="12">
                 <StringItem index="0" value="Artes"/>
                 <StringItem index="1" value="Ciencias"/>
                 <StringItem index="2" value="Ciencias Agrarias"/>
                 <StringItem index="3" value="Ciencias Econ&#xf3;micas"/>
                 <StringItem index="4" value="Ciencias Humanas"/>
-                <StringItem index="5" value="Derecho, Ciencias Pol&#xed;ticas y Sociales"/>
-                <StringItem index="6" value="Enfermer&#xed;a"/>
-                <StringItem index="7" value="Ingenier&#xed;a"/>
-                <StringItem index="8" value="Medicina"/>
-                <StringItem index="9" value="Medicina Veterinaria y Zootecnia"/>
-                <StringItem index="10" value="Odontolog&#xed;a"/>
+                <StringItem index="5" value="Derecho"/>
+                <StringItem index="6" value="Ciencias Pol&#xed;ticas y Sociales"/>
+                <StringItem index="7" value="Enfermer&#xed;a"/>
+                <StringItem index="8" value="Ingenier&#xed;a"/>
+                <StringItem index="9" value="Medicina"/>
+                <StringItem index="10" value="Medicina Veterinaria y Zootecnia"/>
+                <StringItem index="11" value="Odontolog&#xed;a"/>
               </StringArray>
             </Property>
           </Properties>
@@ -261,10 +262,13 @@
             <Property name="text" type="java.lang.String" value="Facultad:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnCrear">
           <Properties>
             <Property name="text" type="java.lang.String" value="CREAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCrearActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>

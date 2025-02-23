@@ -4,6 +4,8 @@
  */
 package view;
 
+import viewmodel.Sign;
+
 /**
  *
  * @author juanr
@@ -30,7 +32,7 @@ public class SignUp extends javax.swing.JFrame {
         TítuloLogin = new javax.swing.JLabel();
         lEscenario = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        lUsuario = new javax.swing.JTextField();
+        jUsuario = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         lNombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -39,7 +41,7 @@ public class SignUp extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         lFacultad = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnCrear = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jPassword = new javax.swing.JPasswordField();
 
@@ -60,10 +62,10 @@ public class SignUp extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre:");
 
-        lUsuario.setText("usuario");
-        lUsuario.addActionListener(new java.awt.event.ActionListener() {
+        jUsuario.setText("usuario");
+        jUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lUsuarioActionPerformed(evt);
+                jUsuarioActionPerformed(evt);
             }
         });
 
@@ -89,7 +91,7 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
 
-        lDocumento.setText("Hernandez");
+        lDocumento.setText("000000");
         lDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lDocumentoActionPerformed(evt);
@@ -100,7 +102,7 @@ public class SignUp extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("N° de documento:");
 
-        lFacultad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Artes", "Ciencias", "Ciencias Agrarias", "Ciencias Económicas", "Ciencias Humanas", "Derecho, Ciencias Políticas y Sociales", "Enfermería", "Ingeniería", "Medicina", "Medicina Veterinaria y Zootecnia", "Odontología" }));
+        lFacultad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Artes", "Ciencias", "Ciencias Agrarias", "Ciencias Económicas", "Ciencias Humanas", "Derecho", "Ciencias Políticas y Sociales", "Enfermería", "Ingeniería", "Medicina", "Medicina Veterinaria y Zootecnia", "Odontología" }));
         lFacultad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lFacultadActionPerformed(evt);
@@ -111,7 +113,12 @@ public class SignUp extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Facultad:");
 
-        jButton1.setText("CREAR");
+        btnCrear.setText("CREAR");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
@@ -144,12 +151,12 @@ public class SignUp extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lFacultad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1)
+                            .addComponent(btnCrear)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(140, Short.MAX_VALUE))
+                            .addComponent(jUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(165, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +180,7 @@ public class SignUp extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -183,7 +190,7 @@ public class SignUp extends javax.swing.JFrame {
                     .addComponent(lDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnCrear)
                 .addGap(64, 64, 64))
         );
 
@@ -201,9 +208,9 @@ public class SignUp extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lUsuarioActionPerformed
+    private void jUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lUsuarioActionPerformed
+    }//GEN-LAST:event_jUsuarioActionPerformed
 
     private void lNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lNombreActionPerformed
         // TODO add your handling code here:
@@ -220,6 +227,24 @@ public class SignUp extends javax.swing.JFrame {
     private void lFacultadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lFacultadActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lFacultadActionPerformed
+
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        if(lNombre.getText().trim().isEmpty()){
+            System.out.println("Campo de nombres vacio.");
+        } else if(lApellidos.getText().trim().isEmpty()){
+            System.out.println("Campo de apellidos vacio");
+        } else if(lDocumento.getText().trim().isEmpty()){
+            System.out.println("Campo de documento vacio."); 
+        } else if (jUsuario.getText().trim().isEmpty()) {
+            System.out.println("Campo de usuario vacio.");
+        } else if(jPassword.getText().trim().isEmpty()){
+            System.out.println("Campo contrasena vacio.");
+        } else{
+            Sign con = new Sign();
+            con.insertarUsuarioConDatos(jUsuario, jPassword, lNombre, lApellidos, lDocumento, lFacultad);
+            
+        }
+    }//GEN-LAST:event_btnCrearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,7 +284,7 @@ public class SignUp extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel TítuloLogin;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCrear;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -268,11 +293,11 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPassword;
+    private javax.swing.JTextField jUsuario;
     private javax.swing.JTextField lApellidos;
     private javax.swing.JTextField lDocumento;
     private javax.swing.JLabel lEscenario;
     private javax.swing.JComboBox<String> lFacultad;
     private javax.swing.JTextField lNombre;
-    private javax.swing.JTextField lUsuario;
     // End of variables declaration//GEN-END:variables
 }

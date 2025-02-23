@@ -4,6 +4,8 @@
  */
 package main;
 import view.*;
+import model.*;
+import viewmodel.*;
 
 /**
  *
@@ -13,5 +15,7 @@ public class CSIA {
     public static void main(String[] args) {
         Login inicio = new Login();
         inicio.iniciar();
+        
+        
     }
 }
