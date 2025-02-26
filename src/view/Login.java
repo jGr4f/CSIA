@@ -47,19 +47,15 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Nombre de usuario:");
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 1, 34)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("CSIA");
 
         jLabel3.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Inicio de sesión");
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Contraseña: ");
 
         jUsuario.setText("usuario");
@@ -72,6 +68,11 @@ public class Login extends javax.swing.JFrame {
         jPassword.setText("contraseñaxd");
 
         loginButton.setText("Iniciar Sesión");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
 
         btnCrear.setText("Crear perfil");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -154,6 +155,12 @@ public class Login extends javax.swing.JFrame {
         dispose();
         
     }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        // TODO add your handling code here:    
+        Log comp = new Log();
+        comp.verificarUsuario(jUsuario, jPassword);
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     /**
      * @param args the command line arguments

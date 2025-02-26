@@ -42,7 +42,7 @@ public class Sign {
         checkStmt.close();
 
         if (count > 0) {
-            System.out.println("El usuario ya está registrado. Inserción cancelada.");
+            System.out.println("El usuario ya está registrado.");
             return; 
         }
 
