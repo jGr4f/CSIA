@@ -6,7 +6,7 @@ CREATE TABLE `csia`.`perfiles` (
   PRIMARY KEY (`id_perfiles`));
 
 CREATE TABLE csia.datosest (
-    id_perfiles INT PRIMARY KEY AUTO_INCREMENT,
+    id_perfiles INT PRIMARY KEY,
     nombres VARCHAR(50),
     apellidos VARCHAR(50),
     ndoc INT,
