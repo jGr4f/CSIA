@@ -61,6 +61,11 @@ CREATE TABLE roles (
     nombre_rol VARCHAR(50) NOT NULL UNIQUE
 );
 
+-- Tipos de permisos 
+CREATE TABLE tipo_permisos ( 
+    id_tipo_permiso INT PRIMARY KEY AUTO_INCREMENT, 
+    nombre_permiso VARCHAR(60)
+);
 
 -- Tabla de Permisos (Relacionada con Roles y Tipos de Permisos)
 CREATE TABLE permisos (
