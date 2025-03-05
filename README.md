@@ -61,6 +61,11 @@ CREATE TABLE roles (
     nombre_rol VARCHAR(50) NOT NULL UNIQUE
 );
 
+-- Tipos de permisos 
+CREATE TABLE tipo_permisos ( 
+    id_tipo_permiso INT PRIMARY KEY AUTO_INCREMENT, 
+    nombre_permiso VARCHAR(60)
+);
 
 -- Tabla de Permisos (Relacionada con Roles y Tipos de Permisos)
 CREATE TABLE permisos (
@@ -70,4 +75,49 @@ CREATE TABLE permisos (
     FOREIGN KEY (id_rol) REFERENCES roles(id_rol) ON DELETE CASCADE,
     FOREIGN KEY (id_tipo_permiso) REFERENCES tipo_permisos(id_tipo_permiso) ON DELETE CASCADE
 );
+
+-- 1. Trigger para registrar en la auditoría cuando se inserta o actualiza una calificación
+
+DELIMITER $$
+
+CREATE TRIGGER audit_calification_insert AFTER INSERT ON calificaciones
+FOR EACH ROW
+BEGIN
+
+    INSERT INTO auditoria(id_perfiles, operacion, detalle, fecha)
+    VALUES (NEW.id_perfiles, 'INSERT', CONCAT('Se insertó una calificación para la materia ', (SELECT nombre_materia FROM materias WHERE id_materia = NEW.id_materia), ' con nota ', NEW.nota), NOW());
+    
+END$$
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER audit_calification_update AFTER UPDATE ON calificaciones
+FOR EACH ROW
+BEGIN
+
+    INSERT INTO auditoria(id_perfiles, operacion, detalle, fecha)
+    VALUES (NEW.id_perfiles, 'UPDATE', CONCAT('Se actualizó la calificación de la materia ', (SELECT nombre_materia FROM materias WHERE id_materia = NEW.id_materia), ' de ', OLD.nota, ' a ', NEW.nota), NOW());
+
+END$$
+
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER audit_profile_delete BEFORE DELETE ON perfiles
+FOR EACH ROW
+BEGIN
+
+    INSERT INTO auditoria(id_perfiles, operacion, detalle, fecha)
+    VALUES (OLD.id_perfiles, 'DELETE', CONCAT('Se eliminó el perfil de ', OLD.nomperfil), NOW());
+
+END$$
+
+DELIMITER ;
+
+
+
+
 
