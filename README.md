@@ -21,8 +21,10 @@ CREATE TABLE datosest (
     apellidos VARCHAR(50),
     ndoc INT UNIQUE NOT NULL,
     id_facultad INT,
+    id_permisos INT,
     FOREIGN KEY (id_perfiles) REFERENCES perfiles(id_perfiles) ON DELETE CASCADE,
-    FOREIGN KEY (id_facultad) REFERENCES facultades(id_facultad)
+    FOREIGN KEY (id_facultad) REFERENCES facultades(id_facultad), 
+    FOREIGN KEY (id_permiso) REFERENCES permisos(id_permiso);
 );
 
 -- Tabla de Materias (Relacionada con Facultades)
@@ -117,7 +119,14 @@ END$$
 
 DELIMITER ;
 
+INSERT INTO roles(nombre_rol) VALUES ("Estudiante"), ("Profesor"), ("Administrador");
 
+INSERT INTO tipo_permisos (nombre_permiso) VALUES ('Leer'), ('Escribir'), ('Eliminar');
 
-
-
+INSERT INTO permisos (id_rol, id_tipo_permiso) VALUES 
+(1, 1), -- Estudiante puede leer
+(2, 1), -- Profesor puede leer
+(2, 2), -- Profesor puede escribir
+(3, 1), -- Administrador puede leer
+(3, 2), -- Administrador puede escribir
+(3, 3); -- Administrador puede eliminar
