@@ -168,23 +168,42 @@ DELIMITER ;
 
 DELIMITER $$
 
-CREATE PROCEDURE InsertarPerfiles()
+CREATE PROCEDURE InsertarDatos()
 BEGIN
     DECLARE i INT DEFAULT 1;
     DECLARE nombre VARCHAR(50);
     DECLARE apellido VARCHAR(50);
     DECLARE usuario VARCHAR(50);
+    DECLARE base_usuario VARCHAR(50);
+    DECLARE nuevo_usuario VARCHAR(50);
     DECLARE pass VARCHAR(10);
-    
+    DECLARE doc INT;
+    DECLARE facultad INT;
+    DECLARE rol INT;
+    DECLARE perfil_id INT;
+    DECLARE usuario_existe INT;
+
     WHILE i <= 10000 DO
-        -- Generar nombres y apellidos aleatorios
+        
         SET nombre = ELT(FLOOR(1 + (RAND() * 10)), 'Juan', 'María', 'Carlos', 'Ana', 'Luis', 'Elena', 'Pedro', 'Sofía', 'Miguel', 'Laura');
         SET apellido = ELT(FLOOR(1 + (RAND() * 10)), 'Pérez', 'Gómez', 'López', 'Torres', 'Fernández', 'Martínez', 'Rodríguez', 'Díaz', 'Sánchez', 'Jiménez');
 
-        -- Crear nombre de usuario basado en el nombre y apellido
-        SET usuario = CONCAT(LOWER(nombre), '.', LOWER(apellido), FLOOR(1 + (RAND() * 99)));
+       
+        SET base_usuario = CONCAT(LOWER(nombre), '.', LOWER(apellido));
+        SET nuevo_usuario = base_usuario;
+        SET usuario_existe = 1; 
 
-        -- Generar contraseña aleatoria de 8 caracteres
+       
+        WHILE usuario_existe > 0 DO
+            SELECT COUNT(*) INTO usuario_existe FROM perfiles WHERE nomperfil = nuevo_usuario;
+            IF usuario_existe > 0 THEN
+                
+                SET nuevo_usuario = CONCAT(base_usuario, FLOOR(1 + (RAND() * 99)));
+            END IF;
+        END WHILE;
+        SET usuario = nuevo_usuario;
+
+        
         SET pass = CONCAT(
             CHAR(FLOOR(65 + (RAND() * 26))), -- Letra mayúscula
             CHAR(FLOOR(97 + (RAND() * 26))), -- Letra minúscula
@@ -196,8 +215,24 @@ BEGIN
             CHAR(FLOOR(33 + (RAND() * 15))) 
         );
 
-        -- Insertar en la tabla perfiles
-        INSERT INTO perfiles (id_perfiles, nomperfil, password) VALUES (i, usuario, pass);
+        
+        INSERT INTO perfiles (nomperfil, password) VALUES (usuario, pass);
+        SET perfil_id = LAST_INSERT_ID();
+
+        
+        SET doc = FLOOR(10000000 + (RAND() * 89999999));
+
+       
+        SET facultad = FLOOR(1 + (RAND() * 5)); -- Facultades del 1 al 5
+        SET rol = FLOOR(1 + (RAND() * 3)); -- Roles del 1 al 3
+
+        
+        INSERT INTO datosest (id_perfiles, nombres, apellidos, ndoc, id_facultad, id_rol) 
+        VALUES (perfil_id, nombre, apellido, doc, facultad, rol);
+        
         SET i = i + 1;
     END WHILE;
 END $$
+
+DELIMITER ;
+
