@@ -3,9 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
+import model.*;
 
+import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import viewmodel.*;
 
@@ -18,9 +21,55 @@ public class Admin extends javax.swing.JFrame {
     /**
      * Creates new form Admin
      */
+    private JTable tabladatos;
+    private JScrollPane scrollPane;
+    private Adm adm;
+    private TablaHelper tab;
+    
     public Admin() {
         initComponents();
+        tab = new TablaHelper(DBConnection.conectardb());
+        inicializarTabla(); 
+        cargarTabla();
     }
+
+    public void iniciar() {
+        setVisible(true);
+        setResizable(false);
+        cargarTabla();
+    }
+
+    private void inicializarTabla() {
+    adm = new Adm();
+
+    
+    tabladatos = new JTable();
+    scrollPane = new JScrollPane(tabladatos);
+
+    
+    jPanel1.setBorder(new EmptyBorder(50, 10, 10, 10)); 
+
+    
+    jPanel1.setLayout(new BorderLayout());
+    jPanel1.add(scrollPane, BorderLayout.CENTER);
+
+    // Actualizar la interfaz
+    jPanel1.revalidate();
+    jPanel1.repaint();
+}
+
+
+    private void cargarTabla() {
+        DefaultTableModel model = adm.cargarDatos();
+        tabladatos.setModel(model);
+    }
+    
+    private void guardarCambios() {
+    tab.guardarCambios(tabladatos);
+    tab.actualizarTabla(tabladatos);
+}
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,29 +82,56 @@ public class Admin extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        btnActualizar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Rockwell", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("PERFILES");
+
+        btnActualizar.setText("ACTUALIZAR");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(218, 218, 218)
+                .addGap(425, 425, 425)
                 .addComponent(jLabel1)
-                .addContainerGap(227, Short.MAX_VALUE))
+                .addContainerGap(443, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(321, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 535, Short.MAX_VALUE)
+                .addComponent(btnEliminar)
+                .addGap(18, 18, 18)
+                .addComponent(btnActualizar)
+                .addGap(27, 27, 27))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -71,6 +147,14 @@ public class Admin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        guardarCambios();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        tab.eliminarRegistro(tabladatos);
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -108,13 +192,13 @@ public class Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-    private JTable tabla = new JTable();
-    DefaultTableModel model = new DefaultTableModel();
-    Adm adm = new Adm();
-    adm.cargarDatos();
-    JScrollPane scrollPane = new JScrollPane(tabla);
+     
+    
+
     
 }

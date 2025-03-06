@@ -13,28 +13,35 @@ import javax.swing.JTextField;
  * @author estudiante
  */
 public class Log {
-    public boolean verificarUsuario(JTextField us, JPasswordField cont) {
-    String query = "SELECT * FROM perfiles WHERE nomperfil = ? AND password = ?";
+    public int verificarUsuario(JTextField us, JPasswordField cont) {
+    String query = "{CALL verificarUsuario(?, ?, ?)}"; // Llamada al procedimiento almacenado
     String usuario = us.getText();
-    String contraseña = cont.getText();
-    
+    String contraseña = new String(cont.getPassword());
+
     try (Connection con = DBConnection.conectardb();
-         PreparedStatement ps = con.prepareStatement(query)) {
+         CallableStatement cs = con.prepareCall(query)) {
+
+        // Asignar parámetros de entrada
+        cs.setString(1, usuario);
+        cs.setString(2, contraseña);
         
-        ps.setString(1, usuario);
-        ps.setString(2, contraseña);
+        // Registrar el parámetro de salida
+        cs.registerOutParameter(3, Types.INTEGER);
         
-        ResultSet rs = ps.executeQuery();
+        // Ejecutar el procedimiento
+        cs.execute();
         
-        // Usuario y contraseña correctos
-        System.out.println("Inicio de sesión correcto.");
-        return rs.next();
+        // Obtener el resultado de salida (ID del rol)
+        int idRol = cs.getInt(3);
         
+        System.out.println("ID de Rol obtenido: " + idRol);
+        return idRol;
+
     } catch (SQLException ex) {
         ex.printStackTrace();
-        System.out.println("Usuario o contrasena incorrectos.");
-        return false; // Error en los datos
+        return -1; // En caso de error
     }
 }
+
 
 }

@@ -19,7 +19,7 @@ public class Login extends javax.swing.JFrame {
     }
     public void iniciar(){
         setVisible(true);
-        setResizable(true);
+        setResizable(false);
         
     }
 
@@ -151,7 +151,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jUsuarioActionPerformed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        new SignUp().setVisible(true);
+        new SignUp().iniciar();
         dispose();
         
     }//GEN-LAST:event_btnCrearActionPerformed
@@ -159,7 +159,20 @@ public class Login extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:    
         Log comp = new Log();
-        comp.verificarUsuario(jUsuario, jPassword);
+        
+        if(comp.verificarUsuario(jUsuario, jPassword) == 1){
+            
+        }
+        else if (comp.verificarUsuario(jUsuario, jPassword) == 2){
+            
+        }
+        else if (comp.verificarUsuario(jUsuario, jPassword) == 3){
+            Admin vadmin = new Admin();
+            vadmin.iniciar();
+            dispose();
+        }
+            
+            
     }//GEN-LAST:event_loginButtonActionPerformed
 
     /**
