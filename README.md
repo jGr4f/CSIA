@@ -14,6 +14,26 @@ CREATE TABLE facultades (
     nombre_facultad VARCHAR(50) UNIQUE NOT NULL
 );
 
+CREATE TABLE roles (
+    id_rol INT PRIMARY KEY AUTO_INCREMENT,
+    nombre_rol VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Tipos de permisos 
+CREATE TABLE tipo_permisos ( 
+    id_tipo_permiso INT PRIMARY KEY AUTO_INCREMENT, 
+    nombre_permiso VARCHAR(60)
+);
+
+-- Tabla de Permisos (Relacionada con Roles y Tipos de Permisos)
+CREATE TABLE permisos (
+    id_permiso INT PRIMARY KEY AUTO_INCREMENT,
+    id_rol INT,
+    id_tipo_permiso INT,
+    FOREIGN KEY (id_rol) REFERENCES roles(id_rol) ON DELETE CASCADE,
+    FOREIGN KEY (id_tipo_permiso) REFERENCES tipo_permisos(id_tipo_permiso) ON DELETE CASCADE
+);
+
 -- Tabla de Datos Personales (Relacionada con Perfiles y Facultades)
 CREATE TABLE datosest (
     id_perfiles INT PRIMARY KEY,
@@ -21,10 +41,10 @@ CREATE TABLE datosest (
     apellidos VARCHAR(50),
     ndoc INT UNIQUE NOT NULL,
     id_facultad INT,
-    id_permisos INT,
+    id_rol INT,
     FOREIGN KEY (id_perfiles) REFERENCES perfiles(id_perfiles) ON DELETE CASCADE,
     FOREIGN KEY (id_facultad) REFERENCES facultades(id_facultad), 
-    FOREIGN KEY (id_permiso) REFERENCES permisos(id_permiso);
+    FOREIGN KEY (id_rol) REFERENCES roles(id_rol)
 );
 
 -- Tabla de Materias (Relacionada con Facultades)
@@ -58,25 +78,7 @@ CREATE TABLE auditoria (
 );
 
 -- Tabla de Roles
-CREATE TABLE roles (
-    id_rol INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_rol VARCHAR(50) NOT NULL UNIQUE
-);
 
--- Tipos de permisos 
-CREATE TABLE tipo_permisos ( 
-    id_tipo_permiso INT PRIMARY KEY AUTO_INCREMENT, 
-    nombre_permiso VARCHAR(60)
-);
-
--- Tabla de Permisos (Relacionada con Roles y Tipos de Permisos)
-CREATE TABLE permisos (
-    id_permiso INT PRIMARY KEY AUTO_INCREMENT,
-    id_rol INT,
-    id_tipo_permiso INT,
-    FOREIGN KEY (id_rol) REFERENCES roles(id_rol) ON DELETE CASCADE,
-    FOREIGN KEY (id_tipo_permiso) REFERENCES tipo_permisos(id_tipo_permiso) ON DELETE CASCADE
-);
 
 -- 1. Trigger para registrar en la auditoría cuando se inserta o actualiza una calificación
 
