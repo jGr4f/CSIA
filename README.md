@@ -132,3 +132,16 @@ INSERT INTO permisos (id_rol, id_tipo_permiso) VALUES
 (3, 1), -- Administrador puede leer
 (3, 2), -- Administrador puede escribir
 (3, 3); -- Administrador puede eliminar
+
+INSERT INTO facultades (nombre_facultad) VALUES ("Artes"),
+("Ciencias"),
+("Ciencias Agrarias"),
+("Ciencias Económicas"),
+("Ciencias Humanas"),
+("Derecho"),
+("Ciencias Políticas y Sociales"),
+("Enfermería"),
+("Ingeniería"),
+("Medicina"),
+("Medicina Veterinaria y Zootecnia"),
+("Odontología");
