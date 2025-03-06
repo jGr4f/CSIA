@@ -145,3 +145,59 @@ INSERT INTO facultades (nombre_facultad) VALUES ("Artes"),
 ("Medicina"),
 ("Medicina Veterinaria y Zootecnia"),
 ("Odontología");
+
+DELIMITER //
+CREATE PROCEDURE verificarUsuario(
+    IN p_usuario VARCHAR(50), 
+    IN p_contraseña VARCHAR(255), 
+    OUT p_id_rol INT
+)
+BEGIN
+    SELECT r.id_rol INTO p_id_rol
+    FROM perfiles p
+    JOIN datosest d ON p.id_perfiles = d.id_perfiles
+    JOIN roles r ON d.id_rol = r.id_rol
+    WHERE p.nomperfil = p_usuario AND p.password = p_contraseña;
+
+    -- Si no encuentra un usuario devuelve -1 
+    IF p_id_rol IS NULL THEN
+        SET p_id_rol = -1;
+    END IF;
+END //
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE PROCEDURE InsertarPerfiles()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    DECLARE nombre VARCHAR(50);
+    DECLARE apellido VARCHAR(50);
+    DECLARE usuario VARCHAR(50);
+    DECLARE pass VARCHAR(10);
+    
+    WHILE i <= 10000 DO
+        -- Generar nombres y apellidos aleatorios
+        SET nombre = ELT(FLOOR(1 + (RAND() * 10)), 'Juan', 'María', 'Carlos', 'Ana', 'Luis', 'Elena', 'Pedro', 'Sofía', 'Miguel', 'Laura');
+        SET apellido = ELT(FLOOR(1 + (RAND() * 10)), 'Pérez', 'Gómez', 'López', 'Torres', 'Fernández', 'Martínez', 'Rodríguez', 'Díaz', 'Sánchez', 'Jiménez');
+
+        -- Crear nombre de usuario basado en el nombre y apellido
+        SET usuario = CONCAT(LOWER(nombre), '.', LOWER(apellido), FLOOR(1 + (RAND() * 99)));
+
+        -- Generar contraseña aleatoria de 8 caracteres
+        SET pass = CONCAT(
+            CHAR(FLOOR(65 + (RAND() * 26))), -- Letra mayúscula
+            CHAR(FLOOR(97 + (RAND() * 26))), -- Letra minúscula
+            CHAR(FLOOR(48 + (RAND() * 10))), -- Número
+            CHAR(FLOOR(33 + (RAND() * 15))), -- Símbolo
+            CHAR(FLOOR(65 + (RAND() * 26))), 
+            CHAR(FLOOR(97 + (RAND() * 26))), 
+            CHAR(FLOOR(48 + (RAND() * 10))), 
+            CHAR(FLOOR(33 + (RAND() * 15))) 
+        );
+
+        -- Insertar en la tabla perfiles
+        INSERT INTO perfiles (id_perfiles, nomperfil, password) VALUES (i, usuario, pass);
+        SET i = i + 1;
+    END WHILE;
+END $$
