@@ -8,7 +8,7 @@ package viewmodel;
  *
  * @author juanr
  */
-
+import java.sql.*;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import viewmodel.Adm;
@@ -39,18 +39,40 @@ public class TablaHelper {
     String query = "UPDATE perfiles SET nomperfil = ?, password = ? WHERE id_perfiles = ?";
 
     for (int i = 0; i < model.getRowCount(); i++) {
-        try (PreparedStatement ps = conexion.prepareStatement(query)) {
-            ps.setString(1, model.getValueAt(i, 1).toString()); 
-            ps.setString(2, model.getValueAt(i, 2).toString());  // Se usa el valor real de la tabla
-            ps.setInt(3, Integer.parseInt(model.getValueAt(i, 0).toString()));
+        try {
+            String nuevoNomperfil = model.getValueAt(i, 1).toString();
+            String nuevaPassword = model.getValueAt(i, 2).toString();
+            int idPerfil = Integer.parseInt(model.getValueAt(i, 0).toString());
 
-            ps.executeUpdate();
+            // Verificar si los valores son diferentes antes de realizar la actualización
+            String verificarQuery = "SELECT nomperfil, password FROM perfiles WHERE id_perfiles = ?";
+            try (PreparedStatement psVerificar = conexion.prepareStatement(verificarQuery)) {
+                psVerificar.setInt(1, idPerfil);
+                ResultSet rs = psVerificar.executeQuery();
+
+                if (rs.next()) {
+                    String perfilActual = rs.getString("nomperfil");
+                    String passwordActual = rs.getString("password");
+
+                    // Solo actualizar si los valores han cambiado
+                    if (!nuevoNomperfil.equals(perfilActual) || !nuevaPassword.equals(passwordActual)) {
+                        try (PreparedStatement psUpdate = conexion.prepareStatement(query)) {
+                            psUpdate.setString(1, nuevoNomperfil);
+                            psUpdate.setString(2, nuevaPassword);
+                            psUpdate.setInt(3, idPerfil);
+
+                            psUpdate.executeUpdate();
+                        }
+                    }
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     System.out.println("Datos de perfiles actualizados correctamente.");
 }
+
     
     public void eliminarRegistro(JTable tabla) {
     DefaultTableModel model = (DefaultTableModel) tabla.getModel();
