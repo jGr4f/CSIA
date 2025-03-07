@@ -73,8 +73,7 @@ CREATE TABLE auditoria (
     id_perfiles INT,
     operacion VARCHAR(50),
     detalle TEXT,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_perfiles) REFERENCES perfiles(id_perfiles) ON DELETE CASCADE
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Tabla de Roles
@@ -106,11 +105,33 @@ BEGIN
 END$$
 
 
+
 DELIMITER ;
 
 DELIMITER $$
 
-CREATE TRIGGER audit_profile_delete BEFORE DELETE ON perfiles
+CREATE TRIGGER audit_profile_update AFTER UPDATE ON perfiles
+FOR EACH ROW
+BEGIN
+    INSERT INTO auditoria(id_perfiles, operacion, detalle, fecha)
+    VALUES (
+        OLD.id_perfiles, 
+        'UPDATE', 
+        CONCAT(
+            'Se actualizó el perfil de ', OLD.nomperfil, 
+            ' a ', NEW.nomperfil, 
+            '. Cambio de contraseña realizado.'
+        ), 
+        NOW()
+    );
+END$$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+CREATE TRIGGER audit_profile_delete AFTER DELETE ON perfiles
 FOR EACH ROW
 BEGIN
 
@@ -236,3 +257,4 @@ END $$
 
 DELIMITER ;
 
+CALL InsertarDatos();
